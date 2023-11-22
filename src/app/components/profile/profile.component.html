@@ -1,0 +1,24 @@
+<div class="container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ userProfile?.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Username:</strong> {{ userProfile?.username }}</p>
+        <p><strong>Email:</strong> {{ userProfile?.email }}</p>
+        <hr>
+        <br>
+        <p><strong>Address:</strong></p>
+        <p><strong>Street:</strong> {{ userProfile?.address.street }} </p>
+        <p><strong>Suite:</strong> {{ userProfile?.address.suite }} </p>
+        <p><strong>City:</strong> {{ userProfile?.address.city }}, {{ userProfile?.address.zipcode }}</p>
+        <p><strong>Zipcode:</strong> {{ userProfile?.address.zipcode }}</p>
+        <p><strong>Phone:</strong> {{ userProfile?.phone }}</p>
+        <hr>
+        <br>
+        <p><strong>Website:</strong> {{ userProfile?.website }}</p>
+        <p><strong>Company:</strong> {{ userProfile?.company.name }} - {{ userProfile?.company.catchPhrase }}</p>
+        <p>{{ userProfile?.company.bs }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>

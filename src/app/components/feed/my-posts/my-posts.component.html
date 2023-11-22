@@ -1,0 +1,12 @@
+<div class="container">
+    <div>
+        <h3>My Posts</h3>
+        <mat-card *ngFor="let post of my_posts" class="post">
+            <mat-card-content>
+                <h3>{{ post.title }}</h3>
+                <p><b>Author:</b> {{ post.author }}</p>
+                <a [routerLink]="['/feed', post.id]">Read More..</a>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

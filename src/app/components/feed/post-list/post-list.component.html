@@ -2,7 +2,8 @@
     <div *ngIf="!paywallVisible">
         <mat-card *ngFor="let post of posts" class="post" [class.viewed]="isPostViewed(post.id)">
             <mat-card-content>
-                <p>{{ post.title }}</p>
+                <h3>{{ post.title }}</h3>
+                <p><b>Author:</b> {{ post.author }}</p>
                 <a [routerLink]="['/feed', post.id]" (click)="onPostClick(post.id)">Read More..</a>
             </mat-card-content>
         </mat-card>
@@ -13,7 +14,35 @@
             <mat-card-title>Paywall</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p>You have exceeded your free limit. Subscribe to continue viewing.</p>
+            <p>You have exceeded your free limit for today. Subscribe to continue viewing.</p>
+
+            <div class="payment-container">
+                <h2>Mock Premium Service Payment</h2>
+                <form (ngSubmit)="makePayment()" #paymentForm="ngForm">
+                    <div class="form-group">
+                        <label for="name">Name on Card:</label>
+                        <input type="text" id="name" name="name" [(ngModel)]="paymentData.name" required
+                            placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number:</label>
+                        <input type="text" id="cardNumber" name="cardNumber" [(ngModel)]="paymentData.cardNumber"
+                            required placeholder="1234 5678 9012 3456">
+                    </div>
+                    <div class="form-group">
+                        <label for="expirationDate">Expiration Date:</label>
+                        <input type="text" id="expirationDate" name="expirationDate"
+                            [(ngModel)]="paymentData.expirationDate" required placeholder="MM/YYYY">
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV:</label>
+                        <input type="text" id="cvv" name="cvv" [(ngModel)]="paymentData.cvv" required placeholder="123">
+                    </div>
+                    <button mat-raised-button color="accent" type="submit" [disabled]="!paymentForm.valid">Submit Payment</button>
+                </form>
+            </div>
+
+            <a routerLink="/login">Login</a>
         </mat-card-content>
     </mat-card>
 </div>

@@ -4,3 +4,10 @@ export interface Post {
     title: string;
     body: string;
 }
+
+export interface PaymentData {
+    name: string;
+    cardNumber: string;
+    expirationDate: string;
+    cvv: string;
+}

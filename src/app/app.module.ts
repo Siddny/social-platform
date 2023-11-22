@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -14,18 +14,25 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth/auth.service';
 import { PostDetailComponent } from './components/feed/post-detail/post-detail.component';
 import { PostListComponent } from './components/feed/post-list/post-list.component';
+import { MyPostsComponent } from './components/feed/my-posts/my-posts.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { FollowingComponent } from './components/following/following.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PostDetailComponent,
-    PostListComponent
+    PostListComponent,
+    MyPostsComponent,
+    ProfileComponent,
+    FollowingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, 
+    ReactiveFormsModule,
     HttpClientModule,
     MatInputModule,
     MatCardModule,

@@ -44,8 +44,7 @@ export class PostService {
   }
 
   hasExceededLimit(): boolean {
-    // this.dailyLimit = this.authService.isPremiumMember() ? 100 : 20;
-    this.dailyLimit = 20;
+    this.dailyLimit = localStorage.getItem('is_premium_member') == 'true' ? 100 : 20;
     return this.viewedPosts.size >= this.dailyLimit;
   }
 
@@ -58,4 +57,18 @@ export class PostService {
     this.viewedPosts = new Set<number>(viewedPosts ? JSON.parse(viewedPosts) : []);
   }
 
+  getMyPosts(userId: string | null): Observable<any> {
+    const url = `${this.apiUrl}posts?userId=${userId}`;
+    return this.http.get(url);
+  }
+
+  getAuthorName(userId: string | null): Observable<any> {
+    const url = `${this.apiUrl}users?id=${userId}`;
+    return this.http.get(url);
+  }
+
+  getFriendsPosts(): Observable<any[]> {
+    const url = `${this.apiUrl}users`;
+    return this.http.get<any[]>(url);
+  }
 }

@@ -12,7 +12,20 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   authenticate(usernameOrEmail: string, password: string): Observable<any> {
-    // Assuming username is equivalent to the name field in the JSONPlaceholder API
-    return this.http.get(`${this.apiUrl}/users?username=${usernameOrEmail}&email=${usernameOrEmail}&zipCode=${password}`);
+    const expression: RegExp = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
+    let url = ``;
+    if (expression.test(usernameOrEmail)){
+      // String is an email
+      url = `${this.apiUrl}users?email=${usernameOrEmail}&zipCode=${password}`;
+    } else {
+      // String is an username
+      url = `${this.apiUrl}users?username=${usernameOrEmail}&zipCode=${password}`;
+    }
+    return this.http.get(url);
+  }
+
+  getUserProfile(userId: any): Observable<any> {
+    const url = `${this.apiUrl}users?id=${userId}`;
+    return this.http.get(url);
   }
 }
