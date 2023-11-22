@@ -1,0 +1,19 @@
+<div class="container">
+    <div *ngIf="!paywallVisible">
+        <mat-card *ngFor="let post of posts" class="post" [class.viewed]="isPostViewed(post.id)">
+            <mat-card-content>
+                <p>{{ post.title }}</p>
+                <a [routerLink]="['/feed', post.id]" (click)="onPostClick(post.id)">Read More..</a>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <mat-card *ngIf="paywallVisible">
+        <mat-card-header>
+            <mat-card-title>Paywall</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>You have exceeded your free limit. Subscribe to continue viewing.</p>
+        </mat-card-content>
+    </mat-card>
+</div>

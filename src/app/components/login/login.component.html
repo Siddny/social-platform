@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+        <mat-form-field>
+            <input matInput placeholder="Username or Email" [(ngModel)]="usernameOrEmail" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="password" placeholder="Zip Code" [(ngModel)]="password" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="login()">Login</button>
+    </mat-card-content>
+</mat-card>
