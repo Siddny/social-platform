@@ -10,22 +10,18 @@ export class UserService {
 
   private apiUrl: string = AppConst.apiPath;
   private following: Set<number> = new Set<number>(); // User IDs of followed users
+  private blockedUsers: Set<number> = new Set<number>(); // User IDs of followed users
 
   constructor(
     private http: HttpClient,
   ) {
     this.loadFollowedUsers();
+    this.loadBlockedUsers();
   }
 
   getAllUsers(): Observable<any[]> {
     const url = `${this.apiUrl}users/`;
     return this.http.get<any[]>(url);
-  }
-
-  getFriendsPosts(): Observable<any[]> {
-    // Implement logic to get posts from followed users
-    // (e.g., make a GET request to your API to fetch posts from friends)
-    return this.http.get<any[]>(`${this.apiUrl}/friends/posts`);
   }
 
   followUser(userId: number): void {
@@ -57,5 +53,50 @@ export class UserService {
   private loadFollowedUsers(): void {
     const following = localStorage.getItem('followedUsers');
     this.following = new Set<number>(following ? JSON.parse(following) : []);
+  }
+
+  blockUser(userId: number): void {
+    if (!this.blockedUsers.has(userId)) {
+      this.blockedUsers.add(userId);
+      this.saveFollowedUsers();
+    }
+  }
+
+  unBlockUser(userId: number): void {
+    if (this.blockedUsers.has(userId)) {
+      this.blockedUsers.delete(userId);
+      this.saveBlockedUsers();
+    }
+  }
+
+  isBlocked(userId: number): boolean {
+    return this.blockedUsers.has(userId);
+  }
+
+  getBlocked(): Set<number> {
+    return this.blockedUsers;
+  }
+
+  private saveBlockedUsers(): void {
+    localStorage.setItem('blockedUsers', JSON.stringify(Array.from(this.following)));
+  }
+
+  private loadBlockedUsers(): void {
+    const blockedUsers = localStorage.getItem('followedUsers');
+    this.following = new Set<number>(blockedUsers ? JSON.parse(blockedUsers) : []);
+  }
+
+  userFollowPostUnblocked(): Set<number> {
+    const followed = this.getFollowing();
+    const blocked = this.getBlocked();
+    const result = new Set<number>();
+
+    followed.forEach((value) => {
+      // If the user is not in blocked, add it to the result set
+      if (!blocked.has(value)) {
+        result.add(value);
+      }
+    });
+    return result;
   }
 }

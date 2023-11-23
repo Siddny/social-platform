@@ -11,7 +11,10 @@
           <div class="user-actions">
             <button mat-raised-button [color]="getButtonColor(user.id)" (click)="toggleFollow(user.id)">
               {{ getButtonText(user.id) }}
-            </button>
+            </button> &nbsp;&nbsp;
+            <button mat-raised-button [color]="getBlockButtonColor(user.id)" (click)="toggleBlock(user.id)">
+                {{ getBlockButtonText(user.id) }}
+              </button>
           </div>
         </div>
       </mat-card-content>

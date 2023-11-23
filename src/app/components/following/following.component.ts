@@ -21,7 +21,7 @@ export class FollowingComponent implements OnInit{
 
   ngOnInit(): void {
     this.isAuthenticated = localStorage.getItem('is_authenticated') == 'true' ? true : false;
-    this.usersFollowing = Array.from(this.userService.getFollowing());
+    this.usersFollowing = Array.from(this.userService.userFollowPostUnblocked());
     
     this.usersFollowing.forEach(element => {
       let userObj = {
