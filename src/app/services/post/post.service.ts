@@ -49,7 +49,9 @@ export class PostService {
   }
 
   hasExceededLimit(): boolean {
-    this.dailyLimit = localStorage.getItem('is_premium_member') == 'true' ? 100 : 20;
+    console.log(this.authService.getMemberStatus());  
+    this.dailyLimit = this.authService.getMemberStatus() ? 100 : 20;
+    console.log(this.dailyLimit);
     return this.viewedPosts.size >= this.dailyLimit;
   }
 

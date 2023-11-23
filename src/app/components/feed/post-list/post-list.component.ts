@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-// import { Post } from '../models';
-// import { SharedService } from '../services/shared/shared.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostService } from 'src/app/services/post/post.service';
-import { PaymentService } from 'src/app/services/payment/payment.service';
-import { PaymentData } from 'src/app/models/app.model';
 import { SharedService } from 'src/app/services/shared/shared.service';
-import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-post-list',
@@ -19,19 +13,11 @@ export class PostListComponent implements OnInit {
   postsAuthors: any[] = [];
   paywallVisible = false;
   viewedPosts: Set<number> = new Set<number>();
-
-  paymentData: PaymentData = {
-    name: '',
-    cardNumber: '',
-    expirationDate: '',
-    cvv: ''
-  };
   
   constructor(
-    private postService: PostService, 
-    private paymentService: PaymentService,
-    private sharedService: SharedService,
-    private userService: UserService,
+    private postService: PostService,
+    public authService: AuthService,
+    public sharedService: SharedService,
     ) {}
 
   ngOnInit() {
@@ -40,6 +26,7 @@ export class PostListComponent implements OnInit {
       this.viewedPosts = this.postService.getViewedPostsSet();
       this.postService.hasExceededLimit();
     } else {
+      this.sharedService.refreshPage();
       this.paywallVisible = true;
     }
   }
@@ -69,23 +56,5 @@ export class PostListComponent implements OnInit {
     return this.viewedPosts.has(postId);
   }
 
-  makePayment(): void {
-    this.paymentService.makePayment().subscribe(
-      (success) => {
-        if (success) {
-          this.paywallVisible = false;
-          localStorage.setItem('is_premium_member', 'true' );
-          // Reload posts after successful payment
-          this.loadPosts();
-          this.sharedService.refreshPage();
-        } else {
-          // Handle payment failure
-          console.error('Payment failed');
-        }
-      },
-      (error) => {
-        console.error('Error making payment', error);
-      }
-    );
-  }
+
 }

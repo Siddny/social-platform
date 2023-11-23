@@ -22,6 +22,7 @@ import { MyPostsComponent } from './components/feed/my-posts/my-posts.component'
 import { ProfileComponent } from './components/profile/profile.component';
 import { FollowingComponent } from './components/following/following.component';
 import { UsersComponent } from './components/users/users.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { UsersComponent } from './components/users/users.component';
     ProfileComponent,
     FollowingComponent,
     UsersComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

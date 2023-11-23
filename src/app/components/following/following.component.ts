@@ -16,7 +16,7 @@ export class FollowingComponent implements OnInit{
   constructor(
     public userService: UserService,
     private postService: PostService,
-    private authService: AuthService,
+    public authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -39,5 +39,15 @@ export class FollowingComponent implements OnInit{
       });
       this.usersFollowingPosts.push(userObj);
     });
+  }
+
+  toggleBlock(userId: number): void {
+    if (this.isAuthenticated) {
+      if (this.userService.isBlocked(userId)) {
+        this.userService.unBlockUser(userId);
+      } else {
+        this.userService.blockUser(userId);
+      }
+    }
   }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { SharedService } from 'src/app/services/shared/shared.service';
 
 @Component({
   selector: 'app-users',
@@ -10,13 +12,18 @@ export class UsersComponent implements OnInit {
   allUsers: any[] = [];
   isAuthenticated: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    public authService: AuthService,
+    public sharedService: SharedService,
+  ) {}
 
   ngOnInit(): void {
+    this.sharedService.refreshPage();
     this.userService.getAllUsers().subscribe((users) => {
         this.allUsers = users.map((user) => ({ ...user, isFollowing: false }));
       });
-    this.isAuthenticated = localStorage.getItem('is_authenticated') == 'true' ? true : false;
+    this.isAuthenticated = this.authService.isAuthenticated();
   }
 
   followUser(userId: number): void {

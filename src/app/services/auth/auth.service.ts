@@ -8,8 +8,28 @@ import { AppConst } from 'src/app/constants/app.const';
 })
 export class AuthService {
   private apiUrl:string = AppConst.apiPath;
+  private isPremiumMenber: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadPremiumStatus();
+    this.loadAuthenticatedStatus();
+  }
+
+  private loadPremiumStatus(): void {
+    this.isPremiumMenber = localStorage.getItem('is_premium_member') == 'true' ? true: false;
+  }
+
+  getMemberStatus(): boolean {
+    return localStorage.getItem('is_premium_member') == 'true' ? true: false;;
+  }
+
+  isAuthenticated(): boolean {
+    return this.isPremiumMenber;
+  }
+
+  private loadAuthenticatedStatus(): void {
+    this.isPremiumMenber = localStorage.getItem('is_authenticated') == 'true' ? true: false;
+  }
 
   authenticate(usernameOrEmail: string, password: string): Observable<any> {
     const expression: RegExp = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;

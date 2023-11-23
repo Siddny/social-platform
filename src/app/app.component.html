@@ -2,11 +2,13 @@
   <h1>Social Platform</h1>
   <nav>
     <a routerLink="/feeds">Feeds</a>
-    <a routerLink="/my-posts">My Posts</a>
-    <a routerLink="/following">Following</a>
-    <a routerLink="/users">Users</a>
-    <a routerLink="/profile">Profile</a>
-    <a routerLink="/login">Logout</a>
+    <a routerLink="/my-posts" *ngIf="authService.isAuthenticated()">My Posts</a>
+    <a routerLink="/users" *ngIf="authService.isAuthenticated()">Users</a>
+    <a routerLink="/following" *ngIf="authService.isAuthenticated()">Following</a>
+    <a routerLink="/payment" *ngIf="authService.isAuthenticated() && !authService.getMemberStatus()">Upgrade Plan</a>
+    <a routerLink="/profile" *ngIf="authService.isAuthenticated()">Profile</a>
+    <a routerLink="/login" *ngIf="authService.isAuthenticated()">Logout</a>
+    <a routerLink="/login" *ngIf="!authService.isAuthenticated()">Login</a>
     <!-- Add other navigation links as needed -->
   </nav>
   <router-outlet></router-outlet>

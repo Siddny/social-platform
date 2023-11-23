@@ -12,6 +12,9 @@
             <mat-icon>keyboard_arrow_down</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
+        <button mat-raised-button (click)="toggleBlock(userFollowed.user.id)" *ngIf="authService.getMemberStatus()">
+          Block <mat-icon>block</mat-icon>
+      </button>
         <mat-card *ngFor="let post of userFollowed.posts" class="post">
           <mat-card-content>
             <h3>{{ post.title }}</h3>
