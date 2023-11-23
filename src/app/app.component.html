@@ -1,15 +1,14 @@
 <div>
   <h1>Social Platform</h1>
   <nav>
-    <a routerLink="/feeds">Feeds</a>
-    <a routerLink="/my-posts" *ngIf="authService.isAuthenticated()">My Posts</a>
-    <a routerLink="/users" *ngIf="authService.isAuthenticated()">Users</a>
-    <a routerLink="/following" *ngIf="authService.isAuthenticated()">Following</a>
-    <a routerLink="/payment" *ngIf="authService.isAuthenticated() && !authService.getMemberStatus()">Upgrade Plan</a>
-    <a routerLink="/profile" *ngIf="authService.isAuthenticated()">Profile</a>
-    <a routerLink="/login" *ngIf="authService.isAuthenticated()">Logout</a>
-    <a routerLink="/login" *ngIf="!authService.isAuthenticated()">Login</a>
-    <!-- Add other navigation links as needed -->
+    <a routerLink="/feeds">&nbsp; Feeds &nbsp;|</a>
+    <a routerLink="/my-posts" *ngIf="authService.isAuthenticated()"> &nbsp; My Posts &nbsp; |</a>
+    <a routerLink="/users" *ngIf="authService.isAuthenticated()"> &nbsp; Users &nbsp; |</a>
+    <a routerLink="/following" *ngIf="authService.isAuthenticated()"> &nbsp; Following &nbsp; |</a>
+    <a routerLink="/payment" *ngIf="authService.isAuthenticated() && !authService.getMemberStatus()"> &nbsp; Upgrade Plan &nbsp; |</a>
+    <a routerLink="/profile" *ngIf="authService.isAuthenticated()"> &nbsp; Profile &nbsp; |</a>
+    <a routerLink="/login" *ngIf="authService.isAuthenticated()"> &nbsp; Logout &nbsp; </a>
+    <a routerLink="/login" *ngIf="!authService.isAuthenticated()"> &nbsp; Login &nbsp; </a>
   </nav>
   <router-outlet></router-outlet>
 </div>

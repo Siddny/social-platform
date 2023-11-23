@@ -32,8 +32,9 @@ export class PaymentComponent {
           const currentUrl = this.router.url;
           if(currentUrl == '/feeds') {
             this.sharedService.refreshPage();
+          } else {
+            this.router.navigate(['/feeds']);
           }
-          // this.router.navigate(['/feeds']);
         }
       }
     );

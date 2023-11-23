@@ -11,15 +11,17 @@ export class PostService {
   private apiUrl: string = AppConst.apiPath;
   private viewedPosts: Set<number> = new Set<number>();
   private dailyLimit: number | undefined;
+  private blockedPosts: Set<number> = new Set<number>();
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
   ) {
     this.loadViewedPosts();
+    this.loadBlockedPosts();
   }
 
-  getPosts(): Observable<any> {
+  getPosts(): any {
     return this.http.get(`${this.apiUrl}/posts`);
   }
 
@@ -77,5 +79,29 @@ export class PostService {
   getFriendsPosts(): Observable<any[]> {
     const url = `${this.apiUrl}users`;
     return this.http.get<any[]>(url);
+  }
+
+  blockPost(postId: number): void {
+    if (!this.blockedPosts.has(postId)) {
+      this.blockedPosts.add(postId);
+      this.saveBlockedPosts();
+    }
+  }
+
+  isPostBlocked(postId: number): boolean {
+    return this.blockedPosts.has(postId);
+  }
+
+  getBlockedPosts(): Set<number> {
+    return this.blockedPosts;
+  }
+
+  private saveBlockedPosts(): void {
+    localStorage.setItem('blockedPosts', JSON.stringify(Array.from(this.blockedPosts)));
+  }
+
+  private loadBlockedPosts(): void {
+    const blockedPosts = localStorage.getItem('blockedPosts');
+    this.blockedPosts = new Set<number>(blockedPosts ? JSON.parse(blockedPosts) : []);
   }
 }

@@ -10,7 +10,7 @@ export class UserService {
 
   private apiUrl: string = AppConst.apiPath;
   private following: Set<number> = new Set<number>(); // User IDs of followed users
-  private blockedUsers: Set<number> = new Set<number>(); // User IDs of followed users
+  private blockedUsers: Set<number> = new Set<number>(); // User IDs of blocked users
 
   constructor(
     private http: HttpClient,
@@ -58,7 +58,7 @@ export class UserService {
   blockUser(userId: number): void {
     if (!this.blockedUsers.has(userId)) {
       this.blockedUsers.add(userId);
-      this.saveFollowedUsers();
+      this.saveBlockedUsers();
     }
   }
 
@@ -78,12 +78,12 @@ export class UserService {
   }
 
   private saveBlockedUsers(): void {
-    localStorage.setItem('blockedUsers', JSON.stringify(Array.from(this.following)));
+    localStorage.setItem('blockedUsers', JSON.stringify(Array.from(this.blockedUsers)));
   }
 
   private loadBlockedUsers(): void {
-    const blockedUsers = localStorage.getItem('followedUsers');
-    this.following = new Set<number>(blockedUsers ? JSON.parse(blockedUsers) : []);
+    const blockedUsers = localStorage.getItem('blockedUsers');
+    this.blockedUsers = new Set<number>(blockedUsers ? JSON.parse(blockedUsers) : []);
   }
 
   userFollowPostUnblocked(): Set<number> {

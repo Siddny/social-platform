@@ -11,6 +11,7 @@ import { SharedService } from 'src/app/services/shared/shared.service';
 export class LoginComponent implements OnInit {
   usernameOrEmail: string = '';
   password: string = '';
+  currentUrl: string = ''; 
 
   constructor(
     private authService: AuthService,
@@ -19,6 +20,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currentUrl = this.router.url;
+    if(this.currentUrl == '/feeds') {
+      this.sharedService.refreshPage();
+    }
     this.logout();
   }
 
@@ -30,8 +35,8 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user_id', response[0].id);
         localStorage.setItem('is_authenticated', 'true');
         this.router.navigate(['/feeds']);
-        const currentUrl = this.router.url;
-        if(currentUrl == '/feeds') {
+        this.currentUrl = this.router.url;
+        if(this.currentUrl == '/feeds') {
           this.sharedService.refreshPage();
         }
       });

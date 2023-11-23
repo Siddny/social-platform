@@ -33,7 +33,7 @@ export class PostListComponent implements OnInit {
 
   loadPosts() {
     this.postService.getPosts().subscribe(
-      (posts) => {
+      (posts: any[]) => {
         posts.forEach((element: any) => {
           this.postService.getAuthorName(element.userId).subscribe(
             (user) => {
@@ -42,7 +42,7 @@ export class PostListComponent implements OnInit {
         });
         this.posts = posts;
       },
-      (error) => {
+      (error: any) => {
         console.error('Error fetching posts', error);
       });
   }
@@ -56,5 +56,18 @@ export class PostListComponent implements OnInit {
     return this.viewedPosts.has(postId);
   }
 
+  toggleBlockPost(postId: number): void {
+    if (this.authService.isAuthenticated()) {
+      this.postService.blockPost(postId);
+    }
+  }
+
+  getBlockButtonColor(userId: number): string {
+    return this.postService.isPostBlocked(userId) ? 'primary' : 'warn';
+  }
+
+  getBlockButtonText(userId: number): string {
+    return this.postService.isPostBlocked(userId) ? 'Unblock' : 'Block';
+  }
 
 }

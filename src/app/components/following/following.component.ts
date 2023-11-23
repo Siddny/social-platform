@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostService } from 'src/app/services/post/post.service';
+import { SharedService } from 'src/app/services/shared/shared.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -8,21 +9,22 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './following.component.html',
   styleUrls: ['./following.component.scss']
 })
-export class FollowingComponent implements OnInit{
+export class FollowingComponent implements OnInit {
   usersFollowing: any[] = [];
   usersFollowingPosts: any[] = [];
   isAuthenticated: boolean = false;
-  
+
   constructor(
     public userService: UserService,
-    private postService: PostService,
+    public postService: PostService,
     public authService: AuthService,
-  ) {}
+    public sharedService: SharedService,
+  ) { }
 
   ngOnInit(): void {
-    this.isAuthenticated = localStorage.getItem('is_authenticated') == 'true' ? true : false;
+    this.isAuthenticated = this.authService.isAuthenticated();
     this.usersFollowing = Array.from(this.userService.userFollowPostUnblocked());
-    
+
     this.usersFollowing.forEach(element => {
       let userObj = {
         user: {},
@@ -35,6 +37,9 @@ export class FollowingComponent implements OnInit{
 
       // get user posts
       this.postService.getMyPosts(element).subscribe((posts) => {
+        // const blockedPosts = Array.from(this.postService.getBlockedPosts());
+        // const array3 = posts.filter((item2: any) => !blockedPosts.some(item1 => item1 === item2.id));
+        // console.log(array3);
         userObj.posts = posts;
       });
       this.usersFollowingPosts.push(userObj);
@@ -48,6 +53,12 @@ export class FollowingComponent implements OnInit{
       } else {
         this.userService.blockUser(userId);
       }
+    }
+  }
+  
+  blockPost(postId: number): void {
+    if (this.isAuthenticated) {
+      this.postService.blockPost(postId);
     }
   }
 }

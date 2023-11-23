@@ -1,9 +1,8 @@
 <div class="container">
-  <div>
-    <h2>Following</h2>
+  <div class="container">
     <mat-accordion class="headers-align">
       <mat-expansion-panel hideToggle *ngFor="let userFollowed of usersFollowingPosts">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header *ngIf="!userService.isBlocked(userFollowed.user.id);">
           <mat-panel-title>
             {{ userFollowed.user.name }}
           </mat-panel-title>
@@ -12,15 +11,22 @@
             <mat-icon>keyboard_arrow_down</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <button mat-raised-button (click)="toggleBlock(userFollowed.user.id)" *ngIf="authService.getMemberStatus()">
+        <button mat-raised-button (click)="toggleBlock(userFollowed.user.id)" *ngIf="authService.getMemberStatus() && !userService.isBlocked(userFollowed.user.id);">
           Block <mat-icon>block</mat-icon>
-      </button>
-        <mat-card *ngFor="let post of userFollowed.posts" class="post">
-          <mat-card-content>
-            <h3>{{ post.title }}</h3>
-            <a [routerLink]="['/feed', post.id]">Read More..</a>
-          </mat-card-content>
-        </mat-card>
+        </button>
+
+        <div *ngFor="let post of userFollowed.posts" class="post">
+          <mat-card *ngIf="!postService.isPostBlocked(post.id) && !userService.isBlocked(userFollowed.user.id);">
+            <mat-card-content>
+              <h3>{{ post.title }}</h3>
+              <a [routerLink]="['/feed', post.id]">Read More..</a>  
+              &nbsp;&nbsp;
+              <button mat-raised-button (click)="blockPost(post.id)" *ngIf="authService.getMemberStatus()">
+                Block Post
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
