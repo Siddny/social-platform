@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostService } from 'src/app/services/post/post.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -8,25 +9,35 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./following.component.scss']
 })
 export class FollowingComponent implements OnInit{
-  users: any[] = [];
-
-  constructor(private userService: UserService) {}
+  usersFollowing: any[] = [];
+  usersFollowingPosts: any[] = [];
+  isAuthenticated: boolean = false;
+  
+  constructor(
+    public userService: UserService,
+    private postService: PostService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe((users) => {
-      this.users = users.map((user) => ({ ...user, isFollowing: false }));
-    });
-  }
+    this.isAuthenticated = localStorage.getItem('is_authenticated') == 'true' ? true : false;
+    this.usersFollowing = Array.from(this.userService.getFollowing());
+    
+    this.usersFollowing.forEach(element => {
+      let userObj = {
+        user: {},
+        posts: []
+      }
+      // get user profile
+      this.authService.getUserProfile(element).subscribe((userProfile: any) => {
+        userObj.user = userProfile[0];
+      });
 
-  followUser(userId: number): void {
-    this.userService.followUser(userId).subscribe(() => {
-      this.users.find((user) => user.id === userId).isFollowing = true;
-    });
-  }
-
-  unfollowUser(userId: number): void {
-    this.userService.unfollowUser(userId).subscribe(() => {
-      this.users.find((user) => user.id === userId).isFollowing = false;
+      // get user posts
+      this.postService.getMyPosts(element).subscribe((posts) => {
+        userObj.posts = posts;
+      });
+      this.usersFollowingPosts.push(userObj);
     });
   }
 }

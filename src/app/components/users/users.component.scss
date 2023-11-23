@@ -11,7 +11,20 @@
     padding: 20px;
   }
 
-  .headers-align .mat-expansion-panel-header-description {
+  .user-item {
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  .user-info {
+    flex: 1;
+  }
+
+  .user-actions {
+    margin-left: 10px;
   }

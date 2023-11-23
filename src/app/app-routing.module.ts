@@ -6,11 +6,13 @@ import { PostListComponent } from './components/feed/post-list/post-list.compone
 import { FollowingComponent } from './components/following/following.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/feeds', pathMatch: 'full' }, // Redirect to feed on root
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'users', component: UsersComponent },
   { path: 'feeds', component: PostListComponent },
   { path: 'my-posts', component: MyPostsComponent },
   { path: 'feed/:id', component: PostDetailComponent },

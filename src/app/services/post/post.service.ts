@@ -28,6 +28,11 @@ export class PostService {
     return this.http.get(url);
   }
 
+  getPostComments(postId: string | null): Observable<any> {
+    const url = `${this.apiUrl}posts/${postId}/comments`;
+    return this.http.get(url);
+  }
+
   getViewedPosts(): number {
     return this.viewedPosts.size;
   }

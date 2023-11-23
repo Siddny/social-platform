@@ -1,14 +1,24 @@
 <div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>User List</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div *ngFor="let user of users">
-                {{ user.name }}
-                <button (click)="followUser(user.id)" *ngIf="!user.isFollowing">Follow</button>
-                <button (click)="unfollowUser(user.id)" *ngIf="user.isFollowing">Unfollow</button>
-            </div>
-        </mat-card-content>
-    </mat-card>
+  <div>
+    <h2>Following</h2>
+    <mat-accordion class="headers-align">
+      <mat-expansion-panel hideToggle *ngFor="let userFollowed of usersFollowingPosts">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ userFollowed.user.name }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ userFollowed.user.email }}
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-card *ngFor="let post of userFollowed.posts" class="post">
+          <mat-card-content>
+            <h3>{{ post.title }}</h3>
+            <a [routerLink]="['/feed', post.id]">Read More..</a>
+          </mat-card-content>
+        </mat-card>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

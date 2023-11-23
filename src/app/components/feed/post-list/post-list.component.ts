@@ -7,6 +7,7 @@ import { PostService } from 'src/app/services/post/post.service';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { PaymentData } from 'src/app/models/app.model';
 import { SharedService } from 'src/app/services/shared/shared.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-post-list',
@@ -30,6 +31,7 @@ export class PostListComponent implements OnInit {
     private postService: PostService, 
     private paymentService: PaymentService,
     private sharedService: SharedService,
+    private userService: UserService,
     ) {}
 
   ngOnInit() {
@@ -37,8 +39,6 @@ export class PostListComponent implements OnInit {
       this.loadPosts();
       this.viewedPosts = this.postService.getViewedPostsSet();
       this.postService.hasExceededLimit();
-      console.log('Viewed Posts:', this.postService.getViewedPosts());
-      console.log('Exceeded Limit:', this.postService.hasExceededLimit());
     } else {
       this.paywallVisible = true;
     }

@@ -5,6 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -17,6 +21,7 @@ import { PostListComponent } from './components/feed/post-list/post-list.compone
 import { MyPostsComponent } from './components/feed/my-posts/my-posts.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FollowingComponent } from './components/following/following.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,7 @@ import { FollowingComponent } from './components/following/following.component';
     MyPostsComponent,
     ProfileComponent,
     FollowingComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +43,10 @@ import { FollowingComponent } from './components/following/following.component';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatDividerModule,
+    MatListModule,
+    MatExpansionModule,
+    MatIconModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
   ],

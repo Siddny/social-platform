@@ -3,6 +3,7 @@ export interface Post {
     id: number;
     title: string;
     body: string;
+    comments: userComment[];
 }
 
 export interface PaymentData {
@@ -10,4 +11,12 @@ export interface PaymentData {
     cardNumber: string;
     expirationDate: string;
     cvv: string;
+}
+
+export interface userComment {
+    name: string;
+    id: number;
+    email: string;
+    body: string;
+    postId: number;
 }

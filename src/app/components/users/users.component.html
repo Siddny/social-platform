@@ -1,0 +1,19 @@
+<div class="container">
+    <mat-card *ngIf="isAuthenticated">
+      <mat-card-header>
+        <mat-card-title>Users</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let user of allUsers" class="user-item">
+          <div class="user-info">
+            <span>{{ user.name }}</span>
+          </div>
+          <div class="user-actions">
+            <button mat-raised-button [color]="getButtonColor(user.id)" (click)="toggleFollow(user.id)">
+              {{ getButtonText(user.id) }}
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

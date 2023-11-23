@@ -29,6 +29,6 @@ export class MyPostsComponent implements OnInit {
           });
       });
       this.my_posts = posts;
-    })
+    });
   }
 }
