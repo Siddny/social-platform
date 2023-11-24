@@ -18,6 +18,7 @@ export class PostDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private postService: PostService
   ) {}
@@ -39,6 +40,11 @@ export class PostDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back();
+    if(this.location.back() != undefined){
+      this.location.back();
+    }else {
+      this.router.navigate(['/feeds']);
+    }
+
   }
 }
