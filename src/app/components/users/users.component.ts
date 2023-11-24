@@ -19,11 +19,13 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sharedService.refreshPage();
+    // this.sharedService.refreshPage();
     this.userService.getAllUsers().subscribe((users) => {
         this.allUsers = users.map((user) => ({ ...user, isFollowing: false }));
       });
-    this.isAuthenticated = this.authService.isAuthenticated();
+    this.authService.isAuthenticated$.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
   }
 
   followUser(userId: number): void {

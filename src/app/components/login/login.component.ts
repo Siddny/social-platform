@@ -39,10 +39,12 @@ export class LoginComponent implements OnInit {
         if(this.currentUrl == '/feeds') {
           this.sharedService.refreshPage();
         }
+        this.authService.onLogin();
       });
   }
 
   logout() {
+    this.authService.onLogout();
     localStorage.removeItem('user_id');
     localStorage.removeItem('username');
     localStorage.removeItem('is_authenticated');

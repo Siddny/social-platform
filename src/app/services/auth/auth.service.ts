@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AppConst } from 'src/app/constants/app.const';
 
 @Injectable({
@@ -8,7 +8,10 @@ import { AppConst } from 'src/app/constants/app.const';
 })
 export class AuthService {
   private apiUrl:string = AppConst.apiPath;
-  private isPremiumMenber: boolean = false;
+  private isPremiumMember: boolean = false;
+  private isUserAuthenticated: boolean = false;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.loadPremiumStatus();
@@ -16,19 +19,33 @@ export class AuthService {
   }
 
   private loadPremiumStatus(): void {
-    this.isPremiumMenber = localStorage.getItem('is_premium_member') == 'true' ? true: false;
+    this.isPremiumMember = localStorage.getItem('is_premium_member') == 'true' ? true: false;
   }
 
   getMemberStatus(): boolean {
-    return localStorage.getItem('is_premium_member') == 'true' ? true: false;;
+    return localStorage.getItem('is_premium_member') == 'true' ? true: false;
   }
 
   isAuthenticated(): boolean {
-    return this.isPremiumMenber;
+    return localStorage.getItem('is_authenticated') == 'true' ? true: false;
   }
 
   private loadAuthenticatedStatus(): void {
-    this.isPremiumMenber = localStorage.getItem('is_authenticated') == 'true' ? true: false;
+    this.isUserAuthenticated = localStorage.getItem('is_authenticated') == 'true' ? true: false;
+  }
+
+  onLogin() {
+    this.isAuthenticatedSubject.next(true);
+    localStorage.setItem('isAuthenticated', true.toString());
+  }
+  onLogout() {
+    this.isAuthenticatedSubject.next(false);
+    localStorage.setItem('isAuthenticated', false.toString());
+  }
+  initializeAuthenticationState(): void {
+    const storedValue = localStorage.getItem('isAuthenticated');
+    const initialValue = storedValue ? JSON.parse(storedValue) : false;
+    this.isAuthenticatedSubject.next(initialValue);
   }
 
   authenticate(usernameOrEmail: string, password: string): Observable<any> {

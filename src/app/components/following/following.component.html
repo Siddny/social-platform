@@ -1,7 +1,12 @@
 <div class="container">
   <div class="container">
+    <mat-card *ngIf="usersFollowingPosts.length == 0;">
+      <mat-card-content>
+        <p>Follow {{ authService.getMemberStatus() ? '/Unblock' : '' }} some friends to see their Posts</p>
+      </mat-card-content>
+    </mat-card>
     <mat-accordion class="headers-align">
-      <mat-expansion-panel hideToggle *ngFor="let userFollowed of usersFollowingPosts">
+      <mat-expansion-panel class="expansion" hideToggle *ngFor="let userFollowed of usersFollowingPosts">
         <mat-expansion-panel-header *ngIf="!userService.isBlocked(userFollowed.user.id);">
           <mat-panel-title>
             {{ userFollowed.user.name }}

@@ -10,9 +10,10 @@ import { SharedService } from 'src/app/services/shared/shared.service';
 })
 export class PostListComponent implements OnInit {
   posts: any[] = [];
-  postsAuthors: any[] = [];
+  postsWithAds: any[] = [];
   paywallVisible = false;
   viewedPosts: Set<number> = new Set<number>();
+  isAuthenticated = false;
   
   constructor(
     private postService: PostService,
@@ -21,6 +22,10 @@ export class PostListComponent implements OnInit {
     ) {}
 
   ngOnInit() {
+    this.authService.isAuthenticated$.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
+
     if(this.postService.hasExceededLimit() == false) {
       this.loadPosts();
       this.viewedPosts = this.postService.getViewedPostsSet();
@@ -41,10 +46,22 @@ export class PostListComponent implements OnInit {
             });
         });
         this.posts = posts;
+        this.createPostsWithAds();
       },
       (error: any) => {
         console.error('Error fetching posts', error);
       });
+  }
+
+  createPostsWithAds(): void {
+    // Insert ads after every five posts
+    this.postsWithAds = this.posts.reduce((acc, post, index) => {
+      acc.push(post);
+      if ((index + 1) % 5 === 0) {
+        acc.push({ ad: true });
+      }
+      return acc;
+    }, []);
   }
 
   onPostClick(postId: number): void {

@@ -37,9 +37,6 @@ export class FollowingComponent implements OnInit {
 
       // get user posts
       this.postService.getMyPosts(element).subscribe((posts) => {
-        // const blockedPosts = Array.from(this.postService.getBlockedPosts());
-        // const array3 = posts.filter((item2: any) => !blockedPosts.some(item1 => item1 === item2.id));
-        // console.log(array3);
         userObj.posts = posts;
       });
       this.usersFollowingPosts.push(userObj);

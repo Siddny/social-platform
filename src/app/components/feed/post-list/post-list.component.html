@@ -1,7 +1,11 @@
 <div class="container">
     <div *ngIf="!paywallVisible">
-        <mat-card *ngFor="let post of posts" class="post" [class.viewed]="isPostViewed(post.id)">
-            <mat-card-content>
+        <h3>Feeds</h3>
+        <mat-card *ngFor="let post of postsWithAds; let i = index" class="post" [class.viewed]="isPostViewed(post.id)">
+            <mat-card-content *ngIf="i % 6 === 5" class="ad-space">
+                <h3>Ad Space</h3>
+            </mat-card-content>
+            <mat-card-content *ngIf="i % 6 !== 5" class="post-content">
                 <h3>{{ post.title }}</h3>
                 <p><mat-icon>person_outline</mat-icon> {{ post.author }}</p>
                 <a [routerLink]="['/feed', post.id]" (click)="onPostClick(post.id)">Read More..</a>

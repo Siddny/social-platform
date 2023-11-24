@@ -9,7 +9,8 @@ import { PostService } from 'src/app/services/post/post.service';
 })
 export class MyPostsComponent implements OnInit {
 
-  my_posts: any;
+  my_posts: any[] = [];
+  postsWithAds: any[] = [];
 
   constructor(
     private postService: PostService,
@@ -29,6 +30,18 @@ export class MyPostsComponent implements OnInit {
           });
       });
       this.my_posts = posts;
+      this.createPostsWithAds();
     });
+  }
+
+  createPostsWithAds(): void {
+    // Insert ads after every five posts
+    this.postsWithAds = this.my_posts.reduce((acc, post, index) => {
+      acc.push(post);
+      if ((index + 1) % 5 === 0) {
+        acc.push({ ad: true });
+      }
+      return acc;
+    }, []);
   }
 }
