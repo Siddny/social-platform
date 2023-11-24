@@ -1,26 +1,17 @@
-<div class="container">
-    <mat-card *ngIf="isAuthenticated">
-        <mat-card-header>
-            <mat-card-title>Users</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div *ngFor="let user of allUsers" class="user-item">
-                <div class="user-info">
-                    <span>{{ user.name }}</span>
-                </div>
-                <div class="user-actions">
-                    <button mat-raised-button [color]="getButtonColor(user.id)" (click)="toggleFollow(user.id)">
-                        {{ getButtonText(user.id) }} 
-                    </button> &nbsp;&nbsp;
-                    <button 
-                        mat-raised-button 
-                        *ngIf="authService.getMemberStatus()"
-                        [color]="getBlockButtonColor(user.id)" 
-                        (click)="toggleBlock(user.id)">
-                        {{ getBlockButtonText(user.id) }} <mat-icon>block</mat-icon>
-                    </button>
-                </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
+<div class="container" *ngIf="isAuthenticated">
+    <h3>Users</h3>
+    <div *ngFor="let user of allUsers" class="user-item">
+        <div class="user-info">
+            <span>{{ user.name }}</span>
+        </div>
+        <div class="user-actions">
+            <button mat-raised-button [color]="getButtonColor(user.id)" (click)="toggleFollow(user.id)">
+                {{ getButtonText(user.id) }}
+            </button> &nbsp;&nbsp;
+            <button mat-raised-button *ngIf="authService.getMemberStatus()" [color]="getBlockButtonColor(user.id)"
+                (click)="toggleBlock(user.id)">
+                {{ getBlockButtonText(user.id) }} <mat-icon>block</mat-icon>
+            </button>
+        </div>
+    </div>
 </div>
