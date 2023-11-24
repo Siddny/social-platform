@@ -9,6 +9,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -49,6 +51,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     MatListModule,
     MatExpansionModule,
     MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
   ],

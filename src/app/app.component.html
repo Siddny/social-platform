@@ -1,19 +1,35 @@
-<div class="header">
-  <h1>Social Platform</h1>
-  <nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <a class="navbar-brand" routerLink="/">Social Platform</a>
+  <button 
+    class="navbar-toggler" 
+    type="button" 
+    data-toggle="collapse" 
+    data-target="#navbarNav"
+    aria-controls="navbarNav" 
+    aria-expanded="false" 
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
     <ng-container *ngIf="isAuthenticated; else loginSection">
-      <a routerLink="/feeds">Feeds</a>
-      <a routerLink="/my-posts">My Posts</a>
-      <a routerLink="/users">Users</a>
-      <a routerLink="/following">Following</a>
-      <a routerLink="/payment" *ngIf="!authService.getMemberStatus()">Upgrade Plan</a>
-      <a routerLink="/profile">Profile</a>
-      <a routerLink="/login">Logout</a>
+      <ul class="navbar-nav">
+      <li class="nav-item"><a data-toggle="collapse" class="nav-link" routerLink="/feeds">Feeds</a></li>
+      <li class="nav-item"><a data-toggle="collapse" class="nav-link" routerLink="/my-posts">My Posts</a></li>
+      <li class="nav-item"><a data-toggle="collapse" class="nav-link" routerLink="/users">Users</a></li>
+      <li class="nav-item"><a data-toggle="collapse" class="nav-link" routerLink="/following">Following</a></li>
+      <li class="nav-item"><a data-toggle="collapse" class="nav-link" routerLink="/payment" *ngIf="!authService.getMemberStatus()">Upgrade Plan</a></li>
+      <li class="nav-item"><a data-toggle="collapse" class="nav-link" routerLink="/profile">Profile</a></li>
+      <li class="nav-item"><a data-toggle="collapse" class="nav-link" routerLink="/login">Logout</a></li>
+    </ul>
     </ng-container>
-    <ng-template #loginSection>
-      <a routerLink="/feeds">Feeds</a>
-      <a routerLink="/login">Login</a>
+      <ng-template #loginSection>
+        <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" routerLink="/feeds">Feeds</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
+    </ul>
     </ng-template>
-  </nav>
+  </div>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>
