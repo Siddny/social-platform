@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.currentUrl = this.router.url;
-    if(this.currentUrl == '/feeds') {
-      this.sharedService.refreshPage();
-    }
+    // if(this.currentUrl == '/feeds') {
+    //   this.sharedService.refreshPage();
+    // }
     this.logout();
   }
 
